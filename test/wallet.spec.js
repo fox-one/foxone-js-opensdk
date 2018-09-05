@@ -1,10 +1,9 @@
-import walletService from './wallet.spec'
-import expect from 'chai'
+import walletService from '../src/Wallet.js'
 
 describe('test wallet service', function () {
   it('test loadAssets api', function () {
     walletService.loadAssets().then(res => {
-      expect(res).to.be.an(Object)
+      chai.expect(res).to.be.an(Object)
     })
   })
 })

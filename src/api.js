@@ -5,7 +5,7 @@
  * @author sunshine .
  */
 import axios from 'axios'
-import { Env } from './consts'
+import { Env } from './consts.js'
 
 let instance = axios.create({
   timeout: 20000,
