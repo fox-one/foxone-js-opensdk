@@ -1,10 +1,8 @@
-/**
- * 功能描述
- *
- * 具体细节
- *
- * @param
- * @returns
- * @author sunshine .
- * @date 2018/9/5
- */
+import Wallet from './services/Wallet'
+import Account from './services/Account'
+
+let ex = Object.assign({}, Wallet, Account)
+
+function pickOf(origin, obj) {}
+
+export default ex

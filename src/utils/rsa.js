@@ -1,5 +1,5 @@
 import { RSA_PBK } from '../consts.js'
-//import { JSEncrypt } from 'jsencrypt'
+import { JSEncrypt } from 'jsencrypt'
 const uuidV4 = require('uuid/v4')
 
 let rsa = new JSEncrypt()

@@ -1,6 +1,6 @@
-import api from './api'
-import { API, MD5_SALT } from './consts'
-import rsa from './utils/rsa'
+import api from '../api'
+import { API, MD5_SALT } from '../consts'
+import rsa from '../utils/rsa'
 
 export default {
   verifyPIN (fields) {

@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
-import api from './api.js'
-import { API } from './consts.js'
-import getPinHeaders from './utils/getPinHeaders.js'
+import api from '../api.js'
+import { API } from '../consts.js'
+import getPinHeaders from '../utils/getPinHeaders.js'
 
 export default {
   loadAssets () {

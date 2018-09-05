@@ -1,4 +1,4 @@
-import walletService from '../src/Wallet.js'
+import walletService from '../src/services/Wallet.js'
 
 describe('test wallet service', function () {
   it('test loadAssets api', function () {
