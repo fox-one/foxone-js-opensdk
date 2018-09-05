@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "debug": "webpack-dev-server --inline --progress --config webpack.config.js",
     "test": "mocha --compilers js:babel-core/register -r \"./test/account.spec.js\"",
     "server": "http-server . -c-1",
     "build": "webpack"

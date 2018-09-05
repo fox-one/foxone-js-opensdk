@@ -74,7 +74,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var pkg = __webpack_require__(13);
-
+debugger;
 var Env = Object.freeze({
   'version': pkg.version,
   'build': pkg.buildVersion
