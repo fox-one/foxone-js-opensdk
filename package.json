@@ -1,0 +1,54 @@
+{
+  "name": "foxone-js-opensdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-core/register -r \"./test/account.spec.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fox-one/foxone-js-opensdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fox-one/foxone-js-opensdk/issues"
+  },
+  "homepage": "https://github.com/fox-one/foxone-js-opensdk#readme",
+  "babel": {
+    "presets": [
+      [
+        "es2015",
+        "stage-0"
+      ]
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.16.1",
+    "blueimp-md5": "^2.10.0",
+    "jsencrypt": "^3.0.0-rc.1",
+    "lodash": "^4.17.10",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^4.1.2",
+    "del": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "mocha": "^5.2.0",
+    "multispinner": "^0.2.1",
+    "node-loader": "^0.6.0",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.7.1",
+    "webpack-hot-middleware": "^2.18.2"
+  }
+}
