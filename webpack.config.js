@@ -17,6 +17,7 @@ module.exports = {
   },
   output: {
     library: 'FoxSDK',
+    libraryExport: 'default',
     libraryTarget: 'umd',
     filename: 'dist/FoxSDK.js',
     auxiliaryComment: 'Fox SDK Comment'

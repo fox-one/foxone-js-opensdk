@@ -7,7 +7,7 @@
     "debug": "webpack-dev-server --inline --progress --config webpack.config.js",
     "test": "mocha --compilers js:babel-core/register -r \"./test/account.spec.js\"",
     "server": "http-server . -c-1",
-    "build": "webpack"
+    "build": "webpack --progress --colors --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",

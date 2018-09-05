@@ -3,6 +3,4 @@ import Account from './services/Account'
 
 let ex = Object.assign({}, Wallet, Account)
 
-function pickOf(origin, obj) {}
-
 export default ex
