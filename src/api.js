@@ -4,8 +4,8 @@
  * 包含 通用的 api 权限校验，
  * @author sunshine .
  */
-import axios from 'axios'
-import { Env } from './consts'
+//import axios from 'axios'
+import { Env } from './consts.js'
 
 let instance = axios.create({
   timeout: 20000,
