@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
-    "jsencrypt": "^3.0.0-rc.1",
+    "jsencrypt": "git+ssh://git@github.com/alfaro28/jsencrypt.git",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
