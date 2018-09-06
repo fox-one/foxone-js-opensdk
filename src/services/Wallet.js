@@ -22,10 +22,10 @@ export default {
       return Promise.reject(err)
     })
   },
-  withdraw (data) {
+  withdraw (data, pin) {
     const url = `${API.BASE}/wallet/withdraw`
     return api.post(url, data, {
-      headers: getPinHeaders()
+      headers: getPinHeaders(pin)
     }).then(({snapshot}) => snapshot, err => {
       return Promise.reject(err)
     })
@@ -36,9 +36,9 @@ export default {
       return Promise.reject(err)
     })
   },
-  loadFee (data) {
+  loadFee (data, pin) {
     const url = `${API.BASE}/wallet/withdraw/fee`
-    return api.get(url, {params: data, headers: getPinHeaders()}).then(({fee}) => fee, err => {
+    return api.get(url, {params: data, headers: getPinHeaders(pin)}).then(({fee}) => fee, err => {
       return Promise.reject(err)
     })
   }

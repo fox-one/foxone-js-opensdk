@@ -5,17 +5,16 @@
  * @author sunshine .
  */
 import axios from 'axios'
-import { Env } from './consts.js'
 
 let instance = axios.create({
   timeout: 20000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    'X-CLIENT-VERSION': Env.version,
-    'X-CLIENT-BUILD': Env.build,
-    'X-CLIENT-TYPE': (process.platform === 'darwin' ? '1' : '2'),
-    'X-CLIENT-ENV': (process.env.NODE_ENV === 'development' ? '0' : '1'),
+    'X-CLIENT-VERSION': '1.8.1',
+    'X-CLIENT-BUILD': '181',
+    'X-CLIENT-TYPE': '1',
+    //'X-CLIENT-ENV': '0',
     'X-CLIENT-DEVICE-ID': '14794F4AA858E6B6F0997FF14E374932',
     'X-CLIENT-DEVICE-NAME': 'Zhangs-MacBook-Pro.local'
   }
@@ -60,7 +59,6 @@ export default {
       // 如果设置不需要转换，则直接返回 res
       if (options.$parsed === false) return res
       if (!res.data) {
-        logger.error('Incorrect response format.', res)
         return Promise.reject({
           code: 'response_error',
           message: 'response error',

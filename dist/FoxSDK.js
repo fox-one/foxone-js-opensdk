@@ -84,7 +84,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(4);
 var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
@@ -397,6 +397,265 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _axios = __webpack_require__(13);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var instance = _axios2.default.create({
+  timeout: 20000,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CLIENT-VERSION': '1.8.1',
+    'X-CLIENT-BUILD': '181',
+    'X-CLIENT-TYPE': '1',
+    //'X-CLIENT-ENV': '0',
+    'X-CLIENT-DEVICE-ID': '14794F4AA858E6B6F0997FF14E374932',
+    'X-CLIENT-DEVICE-NAME': 'Zhangs-MacBook-Pro.local'
+  }
+}); /**
+     * 基于 axios 封装的 api 调用类
+     *
+     * 包含 通用的 api 权限校验，
+     * @author sunshine .
+     */
+
+
+var HANDLERS = {
+  401: [],
+  500: []
+};
+
+exports.default = {
+  CONSTANTS: {
+    IF_MODIFIED_SINCE: 'If-Modified-Since'
+  },
+  /**
+   * 配置参数，设置 headers，等信息
+   * @param options
+   *
+   */
+  config: function config(options) {
+    var headers = options.headers;
+
+    Object.assign(instance.defaults.headers, headers);
+  },
+
+  /**
+   * 用来绑定 权限校验失败、服务器异常、等事件
+   * 当调用 axios 方法 或者权限校验出现上述异常时，触发对应的 handler
+   * @param event
+   * @param handler
+   */
+  on: function on(event, handler) {
+    var handlers = HANDLERS[event];
+    if (!handlers) HANDLERS[event] = handlers = [];
+    handlers.push(handler);
+  },
+  trigger: function trigger(event, payload) {
+    var handlers = HANDLERS[event];
+    if (handlers) handlers.forEach(function (hand) {
+      return hand(payload);
+    });
+  },
+  request: function request(options) {
+    var _this = this;
+
+    /* eslint prefer-promise-reject-errors: 0 */
+    return instance.request(options).then(function (res) {
+      // 如果设置不需要转换，则直接返回 res
+      if (options.$parsed === false) return res;
+      if (!res.data) {
+        return Promise.reject({
+          code: 'response_error',
+          message: 'response error',
+          response: res
+        });
+      }
+      var _res$data = res.data,
+          code = _res$data.code,
+          data = _res$data.data,
+          msg = _res$data.msg;
+
+      if (code !== 0) {
+        return Promise.reject({
+          code: code,
+          message: msg,
+          response: res
+        });
+      }
+      if (!data) {
+        return Promise.reject({
+          code: -1,
+          message: 'invalid data',
+          response: res
+        });
+      }
+      return data;
+    }, function (_ref) {
+      var response = _ref.response,
+          message = _ref.message;
+
+      if (!response) {
+        var _err = { code: 'network_error', message: 'network error' };
+        return Promise.reject(_err);
+      }
+      var data = response.data,
+          status = response.status;
+
+      var code = status;
+      if (data && data.msg) message = data.msg;
+      if (data && data.code) code = data.code;
+      var err = { code: code, message: message, response: response };
+      _this.trigger(status, err);
+      return Promise.reject(err);
+    });
+  },
+  get: function get(url) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    config.url = url;
+    config.method = 'get';
+    return this.request(config);
+  },
+  post: function post(url, data) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    config.url = url;
+    config.method = 'post';
+    config.data = data;
+    return this.request(config);
+  },
+  put: function put(url, data) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    config.url = url;
+    config.method = 'put';
+    config.data = data;
+    return this.request(config);
+  },
+  delete: function _delete(url) {
+    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    config.url = url;
+    config.method = 'delete';
+    return this.request(config);
+  }
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(17);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(6);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(6);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 //let pkg = require('../package.json')
 
 var Env = Object.freeze({
@@ -406,10 +665,10 @@ var Env = Object.freeze({
   'build': '100'
 });
 
-var RSA_PBK = '-----BEGIN RSA PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0/SMrN1Ki50xAD0mjIjA\nNroYtZ+dtFh9i2gT8ANy9ObQplKJQedM5VDviEqnNiyNgQj6byso3EnykgG7JbpQ\nqwt7XgAwO+uE01EdGi46G59DzvobBfwchmV9q9caHE0od95XukCq7vQzlpL/IS2+\nBWaG6RjYeqcE7mxdmcVIzQ6ifcY4tfcAnEXqVz5kAcKM+GbLVDOhdeb3LPpkydNT\nLi+q8vY1PrnnWDlGnJORosBuRS5IXab7QxojKFx1lrq4EvnKGeyB6m3+h14Ixlcv\n/QO5p7RR4lI9hs11Ecatritck25xQQ+YO4n0gYAvScxV0t0nQGBjmsN11Nm4Hl1x\nkwIDAQAB\n-----END RSA PUBLIC KEY-----';
-
+//let RSA_PBK = '-----BEGIN RSA PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0/SMrN1Ki50xAD0mjIjA\nNroYtZ+dtFh9i2gT8ANy9ObQplKJQedM5VDviEqnNiyNgQj6byso3EnykgG7JbpQ\nqwt7XgAwO+uE01EdGi46G59DzvobBfwchmV9q9caHE0od95XukCq7vQzlpL/IS2+\nBWaG6RjYeqcE7mxdmcVIzQ6ifcY4tfcAnEXqVz5kAcKM+GbLVDOhdeb3LPpkydNT\nLi+q8vY1PrnnWDlGnJORosBuRS5IXab7QxojKFx1lrq4EvnKGeyB6m3+h14Ixlcv\n/QO5p7RR4lI9hs11Ecatritck25xQQ+YO4n0gYAvScxV0t0nQGBjmsN11Nm4Hl1x\nkwIDAQAB\n-----END RSA PUBLIC KEY-----'
+var RSA_PBK = '-----BEGIN RSA PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5PbIXYPU+leiueNmwzbk\nu05eXRJ79gQCPyS3mwoUIySAMmPaU2/RN47lhhJO3YHJQ/J/u2jqgTntQKdmmjei\n0L0odUyL3JaSrqirLi6JVWKaF3o9YkX88xwyLLWNdWywFPL9CPWcqLvTbymrS2zN\nl0U8zGVXft+aDlRYdCaBtQWF1a2tmNpKXfOlPOaZotXO/iN4Diqpl+vTqUqRxb0q\nFkPcAH1XKpWTDP7XSAVLyh2CIf2GEZFzt55nMudfUXMEwv0aAUIgsxK/Yk2cyTbY\nqrYnTJbX/WysMtg+vhVy7DJznwx5sPl1huPO5ytfwTagKgQArF34WfLEB7OIZuZL\n+QIDAQAB\n-----END RSA PUBLIC KEY-----';
 var API = {
-  'BASE': 'https://api.fox.one/api',
+  'BASE': 'https://dev.fox.one/api',
   'WS': 'wss://ws.fox.one/ws'
 };
 
@@ -420,7 +679,25 @@ exports.RSA_PBK = RSA_PBK;
 exports.API = API;
 
 /***/ }),
-/* 2 */
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -610,287 +887,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(17);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(6);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _axios = __webpack_require__(13);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _consts = __webpack_require__(1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * 基于 axios 封装的 api 调用类
- *
- * 包含 通用的 api 权限校验，
- * @author sunshine .
- */
-var instance = _axios2.default.create({
-  timeout: 20000,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CLIENT-VERSION': _consts.Env.version,
-    'X-CLIENT-BUILD': _consts.Env.build,
-    'X-CLIENT-TYPE': process.platform === 'darwin' ? '1' : '2',
-    'X-CLIENT-ENV': process.env.NODE_ENV === 'development' ? '0' : '1',
-    'X-CLIENT-DEVICE-ID': '14794F4AA858E6B6F0997FF14E374932',
-    'X-CLIENT-DEVICE-NAME': 'Zhangs-MacBook-Pro.local'
-  }
-});
-
-var HANDLERS = {
-  401: [],
-  500: []
-};
-
-exports.default = {
-  CONSTANTS: {
-    IF_MODIFIED_SINCE: 'If-Modified-Since'
-  },
-  /**
-   * 配置参数，设置 headers，等信息
-   * @param options
-   *
-   */
-  config: function config(options) {
-    var headers = options.headers;
-
-    Object.assign(instance.defaults.headers, headers);
-  },
-
-  /**
-   * 用来绑定 权限校验失败、服务器异常、等事件
-   * 当调用 axios 方法 或者权限校验出现上述异常时，触发对应的 handler
-   * @param event
-   * @param handler
-   */
-  on: function on(event, handler) {
-    var handlers = HANDLERS[event];
-    if (!handlers) HANDLERS[event] = handlers = [];
-    handlers.push(handler);
-  },
-  trigger: function trigger(event, payload) {
-    var handlers = HANDLERS[event];
-    if (handlers) handlers.forEach(function (hand) {
-      return hand(payload);
-    });
-  },
-  request: function request(options) {
-    var _this = this;
-
-    /* eslint prefer-promise-reject-errors: 0 */
-    return instance.request(options).then(function (res) {
-      // 如果设置不需要转换，则直接返回 res
-      if (options.$parsed === false) return res;
-      if (!res.data) {
-        logger.error('Incorrect response format.', res);
-        return Promise.reject({
-          code: 'response_error',
-          message: 'response error',
-          response: res
-        });
-      }
-      var _res$data = res.data,
-          code = _res$data.code,
-          data = _res$data.data,
-          msg = _res$data.msg;
-
-      if (code !== 0) {
-        return Promise.reject({
-          code: code,
-          message: msg,
-          response: res
-        });
-      }
-      if (!data) {
-        return Promise.reject({
-          code: -1,
-          message: 'invalid data',
-          response: res
-        });
-      }
-      return data;
-    }, function (_ref) {
-      var response = _ref.response,
-          message = _ref.message;
-
-      if (!response) {
-        var _err = { code: 'network_error', message: 'network error' };
-        return Promise.reject(_err);
-      }
-      var data = response.data,
-          status = response.status;
-
-      var code = status;
-      if (data && data.msg) message = data.msg;
-      if (data && data.code) code = data.code;
-      var err = { code: code, message: message, response: response };
-      _this.trigger(status, err);
-      return Promise.reject(err);
-    });
-  },
-  get: function get(url) {
-    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    config.url = url;
-    config.method = 'get';
-    return this.request(config);
-  },
-  post: function post(url, data) {
-    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    config.url = url;
-    config.method = 'post';
-    config.data = data;
-    return this.request(config);
-  },
-  put: function put(url, data) {
-    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    config.url = url;
-    config.method = 'put';
-    config.data = data;
-    return this.request(config);
-  },
-  delete: function _delete(url) {
-    var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    config.url = url;
-    config.method = 'delete';
-    return this.request(config);
-  }
-};
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1076,7 +1072,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 7 */
@@ -1152,7 +1148,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _consts = __webpack_require__(1);
+var _consts = __webpack_require__(3);
 
 var _jsencrypt = __webpack_require__(33);
 
@@ -1191,9 +1187,13 @@ var _Account = __webpack_require__(37);
 
 var _Account2 = _interopRequireDefault(_Account);
 
+var _api = __webpack_require__(1);
+
+var _api2 = _interopRequireDefault(_api);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ex = Object.assign({}, _Wallet2.default, _Account2.default);
+var ex = Object.assign({}, _Wallet2.default, _Account2.default, { api: _api2.default });
 
 exports.default = ex;
 
@@ -1208,11 +1208,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _api = __webpack_require__(4);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
-var _consts = __webpack_require__(1);
+var _consts = __webpack_require__(3);
 
 var _getPinHeaders = __webpack_require__(32);
 
@@ -1248,10 +1248,10 @@ exports.default = {
       return Promise.reject(err);
     });
   },
-  withdraw: function withdraw(data) {
+  withdraw: function withdraw(data, pin) {
     var url = _consts.API.BASE + '/wallet/withdraw';
     return _api2.default.post(url, data, {
-      headers: (0, _getPinHeaders2.default)()
+      headers: (0, _getPinHeaders2.default)(pin)
     }).then(function (_ref4) {
       var snapshot = _ref4.snapshot;
       return snapshot;
@@ -1268,9 +1268,9 @@ exports.default = {
       return Promise.reject(err);
     });
   },
-  loadFee: function loadFee(data) {
+  loadFee: function loadFee(data, pin) {
     var url = _consts.API.BASE + '/wallet/withdraw/fee';
-    return _api2.default.get(url, { params: data, headers: (0, _getPinHeaders2.default)() }).then(function (_ref6) {
+    return _api2.default.get(url, { params: data, headers: (0, _getPinHeaders2.default)(pin) }).then(function (_ref6) {
       var fee = _ref6.fee;
       return fee;
     }, function (err) {
@@ -1293,9 +1293,9 @@ module.exports = __webpack_require__(14);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(4);
 var Axios = __webpack_require__(16);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 
 /**
  * Create an instance of Axios
@@ -1378,7 +1378,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(25);
 var dispatchRequest = __webpack_require__(26);
@@ -1910,7 +1910,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(27);
 var isCancel = __webpack_require__(8);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -2171,7 +2171,7 @@ var _rsa2 = _interopRequireDefault(_rsa);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getHeaders() {
+function getHeaders(pin) {
   return {
     'fox-client-pin': _rsa2.default.$encrypt({ p: pin })
   };
@@ -7669,11 +7669,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _api = __webpack_require__(4);
+var _api = __webpack_require__(1);
 
 var _api2 = _interopRequireDefault(_api);
 
-var _consts = __webpack_require__(1);
+var _consts = __webpack_require__(3);
 
 var _rsa = __webpack_require__(10);
 
@@ -7682,13 +7682,26 @@ var _rsa2 = _interopRequireDefault(_rsa);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+  modifyPIN: function modifyPIN(fields) {
+    var url = _consts.API.BASE + '/account/pin';
+    // SDK中将pinType设为固定值2
+    fields['pinType'] = 2;
+    var payload = _.pick(fields, ['pinType']);
+    var headers = {};
+    if (fields.pin !== '') {
+      headers['fox-client-pin'] = _rsa2.default.$encrypt({
+        p: fields.pin
+      });
+    }
+    payload.newPinToken = _rsa2.default.$.encrypt(md5(_consts.MD5_SALT + fields.newPin), true);
+    return _api2.default.put(url, payload, { headers: headers });
+  },
   verifyPIN: function verifyPIN(fields) {
     var url = _consts.API.BASE + '/account/pin-verify';
-    var payload = { pinType: fields.pinType
+    var payload = { pinType: 2
       // pin 相同时则为验证逻辑
     };var pinToken = _rsa2.default.$encrypt({
       p: fields.pin
-      // hp: md5(MD5_SALT + fields.pin)
     });
     return _api2.default.put(url, payload, {
       headers: {
