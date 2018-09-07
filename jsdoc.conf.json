@@ -1,0 +1,23 @@
+{
+  "source": {
+    // 需要生成文檔的對應 js 路徑
+    "include": ["src/services"],
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "docs/", // 文檔生成目錄
+    "readme": "README.md", // 文檔首頁展示內容
+    "template": "", // 文檔模板
+    "package": "package.json",
+    "recurse": true,
+    "encoding": "utf8"
+  },
+  "templates": {
+    // 模板配置，此處跟模板設置有關。
+  },
+  "plugins": ["plugins/markdown"],
+  "markdown": {
+    "tags": ["example"],
+    "idInHeadings": true
+  }
+}
