@@ -20,4 +20,5 @@ export {
   Env,
   RSA_PBK,
   API,
+  MD5_SALT
 }
