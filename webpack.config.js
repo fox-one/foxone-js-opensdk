@@ -1,3 +1,5 @@
+var webpack = require('webpack')
+
 module.exports = {
   //...
   entry: {
@@ -19,7 +21,13 @@ module.exports = {
     library: 'FoxSDK',
     libraryExport: 'default',
     libraryTarget: 'umd',
-    filename: 'dist/FoxSDK.js',
+    filename: 'dist/FoxSDK.min.js',
     auxiliaryComment: 'Fox SDK Comment'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ],
+  externals: {
+    axios: 'axios'
   }
 }

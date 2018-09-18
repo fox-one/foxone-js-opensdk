@@ -1,3 +1,17 @@
+## 安装
+依赖 axios 
+```
+npm install foxone-js-opensdk
+```
+## 使用
+1、html 引入
+```
+先引入 axios 
+<script src="[your path]/axios.js"></script>
+<script src="[node_modules]/foxone-js-opensdk/dist/FoxSDK.js"></script>
+```
+2、js 引入
+
 <a name="module_Account"></a>
 
 ## Account

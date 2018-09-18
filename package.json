@@ -1,8 +1,13 @@
 {
   "name": "foxone-js-opensdk",
-  "version": "1.0.0",
+  "version": "0.9.2",
   "description": "",
-  "main": "index.js",
+  "main": "dist/FoxSDK.min.js",
+  "files": [
+    "dist",
+    "f2e",
+    "test"
+  ],
   "scripts": {
     "debug": "webpack-dev-server --inline --progress --config webpack.config.js",
     "test": "mocha --compilers js:babel-core/register -r \"./test/account.spec.js\"",
@@ -28,12 +33,12 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.16.1",
-    "blueimp-md5": "^2.10.0",
-    "jsencrypt": "git+ssh://git@github.com/alfaro28/jsencrypt.git",
-    "uuid": "^3.3.2"
+    "axios": "^0.16.1"
   },
   "devDependencies": {
+    "blueimp-md5": "^2.10.0",
+    "jsencrypt": "git+ssh://git@github.com/alfaro28/jsencrypt.git",
+    "uuid": "^3.3.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^7.2.3",
@@ -48,6 +53,7 @@
     "eslint-loader": "^1.9.0",
     "file-loader": "^0.11.2",
     "http-server": "^0.10.0",
+    "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
     "lodash": "^4.17.10",
     "mocha": "^5.2.0",
