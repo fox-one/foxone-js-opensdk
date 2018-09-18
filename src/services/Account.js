@@ -42,7 +42,7 @@ export default {
     let payload = { pinType: 2 }
     // pin 相同时则为验证逻辑
     let pinToken = rsa.$encrypt({
-      p: fields.pin
+      p: pin
     })
     return api.put(url, payload, {
       headers: {
