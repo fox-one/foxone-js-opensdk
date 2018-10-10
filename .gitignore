@@ -3,4 +3,7 @@
 node_modules/
 
 docs/foxone-js-opensdk
+.package-lock.json
+
+docs/
 out/
