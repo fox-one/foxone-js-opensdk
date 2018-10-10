@@ -91,48 +91,4 @@ load an asset by assetId.
 ### Wallet.loadEnabledCoins() ⇒ <code>Promise</code>
 load available coins for deposit.
 
-**Kind**: static method of [<code>Wallet</code>](#module_Wallet)  
-**Fulfil**: <code>Array</code> - available coins.  
-**Reject**: <code>Error</code> - request error.  
-<a name="module_Wallet.withdraw"></a>
-
-### Wallet.withdraw(data, pin) ⇒ <code>Promise</code>
-withdraw assets.
-
-**Kind**: static method of [<code>Wallet</code>](#module_Wallet)  
-**Fulfil**: <code>Array</code> - transfer recodes after withdraw.  
-**Reject**: <code>Error</code> - request error.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | params for withdraw request. for EOS it should include: assetId, publicKey, memo, label, amount;for the others: assetId, publicKey, amount, memo. |
-| pin | <code>string</code> | personal identification number. |
-
-<a name="module_Wallet.loadSnapshots"></a>
-
-### Wallet.loadSnapshots(id) ⇒ <code>Promise</code>
-transfer snapshot for an asset.
-
-**Kind**: static method of [<code>Wallet</code>](#module_Wallet)  
-**Fulfil**: <code>Array</code> - all transfer records.  
-**Reject**: <code>Error</code> - request error.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| id | <code>string</code> | assetId. |
-
-<a name="module_Wallet.loadFee"></a>
-
-### Wallet.loadFee(data, pin) ⇒ <code>Promise</code>
-load transfer fee for an transition or withdraw
-
-**Kind**: static method of [<code>Wallet</code>](#module_Wallet)  
-**Fulfil**: <code>Object</code> - fee details.  
-**Reject**: <code>Error</code> - request error.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| data | <code>object</code> | params for the request. for EOS: it should include: assetId, publicKey, label; for the others: assetId, publicKey |
-| pin | <code>string</code> | personal identification number. |
-
-
+> An awesome project.
