@@ -42,6 +42,7 @@ Account module
 * [Account](#module_Account)
     * [.modifyPIN(pin, newPin)](#module_Account.modifyPIN) ⇒ <code>Promise</code>
     * [.verifyPIN(pin)](#module_Account.verifyPIN) ⇒ <code>Promise</code>
+    * [.getAccountDetail()](#module_Account.getAccountDetail) ⇒ <code>PromiseLike.&lt;({user: \*}\|never)&gt;</code> \| <code>Promise.&lt;({user: \*}\|never)&gt;</code> \| <code>\*</code>
 
 <a name="module_Account.modifyPIN"></a>
 
@@ -70,10 +71,15 @@ verify pin.
 | --- | --- | --- |
 | pin | <code>string</code> | pin for now, a string of 6 digits. |
 
-<a name="module_Wallet"></a>
+<a name="module_Account.getAccountDetail"></a>
 
-## Wallet
-Wallet module.
+### Account.getAccountDetail() ⇒ <code>Promise</code>
+get login user account detail.
+
+**Kind**: static method of [<code>Account</code>](#module_Account)  
+**Fulfil**: <code>User</code> - user account object.  
+**Reject**: <code>error</code> - request error.  
+
 
 
 * [Wallet](#module_Wallet)

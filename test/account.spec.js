@@ -1,5 +1,6 @@
 let modifyPIN = FoxSDK.modifyPIN
 let verifyPIN = FoxSDK.verifyPIN
+let getAccountDetail = FoxSDK.getAccountDetail
 let expect = chai.expect
 let api = FoxSDK.api
 
@@ -7,7 +8,7 @@ describe('Account Service', function () {
   before(function () {
     api.config({
       headers: {
-        'Authorization': `Bearer dSw1NEwsZCxBYSxlLDFnOHpWdw==.P0Vcd2ghLaCL9Nkz2q9Dn4qJlr1GuGU5BBAHk1y0Uxg=`
+        'Authorization': `Bearer dSw1MXMsZCxCZyxlLDFnTGdqWQ==.FsuwC8JQK2azNIQEz2Lo3k42ubEsq+QmavoEob7+ysE=`
       }
     })
   })
@@ -25,6 +26,15 @@ describe('Account Service', function () {
   //     done(res)
   //   })
   // })
+
+  it('getAccountDetail', function (done) {
+    getAccountDetail().then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(err => {
+      done(err)
+    })
+  })
 
   it('verifyPIN', function (done) {
     let params = {

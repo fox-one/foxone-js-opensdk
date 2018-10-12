@@ -50,4 +50,15 @@ export default {
       }
     })
   },
+
+  /**
+   * get login user account detail.
+   * @returns {Promise}
+   * @fulfil {User} - user account object.
+   * @reject {error} - request error.
+   */
+  getAccountDetail () {
+    let url = `${API.BASE}/account/detail`
+    return api.get(url).then(({user}) => user)
+  }
 }
