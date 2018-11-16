@@ -10,7 +10,7 @@ export default {
   /**
    * load all assets in the wallet.
    * @returns {Promise}
-   * @fulfil {Array} - all assets details.
+   * @fulfil [{}] - all assets details.
    * @reject {Error} - request error.
    */
   loadAssets () {

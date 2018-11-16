@@ -6,22 +6,19 @@
 npm install foxone-js-opensdk
 ```
 ## 使用
-1、html 引入
+
+1、引入
+
+在javascript文件中引入：
+```javascript
+import FoxSDK from 'foxone-js-opensdk'
+```
 ```html
 // 先引入 axios 
 <script src="[your path]/axios.js"></script>
 <script src="[node_modules]/foxone-js-opensdk/dist/FoxSDK.js"></script>
-
-<script>
-// load assets
-FoxSDK.loadAssets.then(assets => {
-  // code
-}).catch(err => {
-  // handle error
-})
-</script>
-
 ```
+
 2、js 引入
 
 ```javascript
