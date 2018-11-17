@@ -1,24 +1,19 @@
-let loadAssets = FoxSDK.loadAssets
-let loadAsset = FoxSDK.loadAsset
-let loadEnabledCoins = FoxSDK.loadEnabledCoins
-let withdraw = FoxSDK.withdraw
-let loadSnapshots = FoxSDK.loadSnapshots
-let loadFee = FoxSDK.loadFee
-let api = FoxSDK.api
+let sdk = new FoxSDK({env: 'development'})
+let api = sdk.api
 let expect = chai.expect
 
 describe('Wallet Service', function () {
   before(function () {
     api.config({
       headers: {
-        'Authorization': `Bearer dSw1NEosZCxBYSxlLDFnOG0wTg==.8uCM/BTk+fosGLjsv5a1o+asvSAb0HuOQc+VO4iEx7M=`
+        'Authorization': 'Bearer dSw1MXMsZCxDRSxlLDFnWW1MVQ==.+kFvORmpMdUb5Cl9iCeZNbRjqvoJcyzDjMyq1/ENL0k='
       }
     })
   })
 
   it('#loadAssets', function (done) {
-    loadAssets().then(function (res) {
-      expect(res).to.be.an('array')
+    sdk.loadAssets().then(function (res) {
+      expect(res).to.be.an('object')
       done()
     }).catch(function (err) {
       done(err)
@@ -27,7 +22,7 @@ describe('Wallet Service', function () {
 
   it('#loadAsset', function (done) {
     let assetId = '6cfe566e-4aad-470b-8c9a-2fd35b49c68d'
-    loadAsset(assetId).then(function (res) {
+    sdk.loadAsset(assetId).then(function (res) {
       expect(res).to.be.an('object')
       done()
     }).catch(function (err) {
@@ -36,8 +31,8 @@ describe('Wallet Service', function () {
   })
 
   it('#loadEnabledCoins', function (done) {
-    loadEnabledCoins().then(function (res) {
-      expect(res).to.be.an('array')
+    sdk.loadEnabledCoins().then(function (res) {
+      expect(res).to.be.an('object')
       done()
     }).catch(function (err) {
       done(err)
@@ -83,8 +78,8 @@ describe('Wallet Service', function () {
 
   it('#loadSnapshots', function (done) {
     let assetId = '6cfe566e-4aad-470b-8c9a-2fd35b49c68d'
-    loadSnapshots(assetId).then(function (res) {
-      expect(res).to.be.an('array')
+    sdk.loadSnapshots(assetId).then(function (res) {
+      expect(res).to.be.an('object')
       done()
     }).catch(function (err) {
       done(err)
@@ -96,8 +91,8 @@ describe('Wallet Service', function () {
       assetId: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
       publicKey: '0x7588B06E7D623a5Ef6896ff199C08026A60d1f9b'
     }
-    let pin = '123456'
-    loadFee(params, pin).then(function (res) {
+    let pin = ''
+    sdk.loadFee(params, pin).then(function (res) {
       expect(res).to.be.an('object')
       done()
     }).catch(function (err) {

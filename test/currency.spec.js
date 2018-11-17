@@ -1,18 +1,17 @@
-let currency = FoxSDK.currency
-let api = FoxSDK.api
+let sdk = new FoxSDK({env: 'development'})
 let expect = chai.expect
 
 describe('Currency', function () {
   before(function () {
-    api.config({
+    sdk.api.config({
       headers: {
-        'Authorization': `Bearer dSw1S3csZCxDQyxlLDFnVVNrMA==.twa2VbgFMWxG/SGasBBe8VeJVyv7DjSc3oaH6XaZcXY=`
+        'Authorization': 'Bearer dSw1MXMsZCxDRSxlLDFnWW1MVQ==.+kFvORmpMdUb5Cl9iCeZNbRjqvoJcyzDjMyq1/ENL0k='
       }
     })
   })
 
   it('#currency', function (done) {
-    currency().then(function (res) {
+    sdk.currency().then(function (res) {
       expect(res).to.be.an('object')
       done()
     }).catch(function (err) {

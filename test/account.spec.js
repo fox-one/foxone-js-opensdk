@@ -1,25 +1,33 @@
-let modifyPIN = FoxSDK.modifyPIN
-let verifyPIN = FoxSDK.verifyPIN
-let getAccountDetail = FoxSDK.getAccountDetail
 let expect = chai.expect
-let api = FoxSDK.api
+let sdk = new FoxSDK({env: 'development'})
 
 describe('Account Service', function () {
   before(function () {
-    api.config({
+    sdk.api.config({
       headers: {
-        'Authorization': `Bearer dSw1MXMsZCxCZyxlLDFnTGdqWQ==.FsuwC8JQK2azNIQEz2Lo3k42ubEsq+QmavoEob7+ysE=`
+        'Authorization': 'Bearer dSw1MXMsZCxDRSxlLDFnWW1MVQ==.+kFvORmpMdUb5Cl9iCeZNbRjqvoJcyzDjMyq1/ENL0k='
       }
     })
   })
 
   // it('#modifyPIN', function (done) {
+  //   let pin = ""
+  //   let newPin = "950626"
+  //   sdk.modifyPIN(pin, newPin).then(function (res) {
+  //     expect(res).to.be.an('object')
+  //     done()
+  //   }).catch(function (res) {
+  //     done(res)
+  //   })
+  // })
+
+  // it('#modifyPIN', function (done) {
   //   let params = {
   //     pinType: 2,
-  //     pin: '',
-  //     newPin: '123456'
+  //     pin: '950626',
+  //     newPin: ''
   //   }
-  //   modifyPIN(params).then(function (res) {
+  //   sdk.modifyPIN(params).then(function (res) {
   //     expect(res).to.be.an('object')
   //     done()
   //   }).catch(function (res) {
@@ -28,7 +36,7 @@ describe('Account Service', function () {
   // })
 
   it('getAccountDetail', function (done) {
-    getAccountDetail().then(function (res) {
+    sdk.getAccountDetail().then(function (res) {
       expect(res).to.be.an('object')
       done()
     }).catch(err => {
@@ -37,11 +45,8 @@ describe('Account Service', function () {
   })
 
   it('verifyPIN', function (done) {
-    let params = {
-      pinType: 2,
-      pin: '123456'
-    }
-    verifyPIN(params).then(function (res) {
+    let pin = '123456'
+    sdk.verifyPIN(pin).then(function (res) {
       expect(res).to.be.an('object')
       done()
     }).catch(function (err) {

@@ -11,12 +11,6 @@ let instance = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    'X-CLIENT-VERSION': '1.8.1',
-    'X-CLIENT-BUILD': '181',
-    'X-CLIENT-TYPE': '1',
-    //'X-CLIENT-ENV': '0',
-    'X-CLIENT-DEVICE-ID': '14794F4AA858E6B6F0997FF14E374932',
-    'X-CLIENT-DEVICE-NAME': 'Zhangs-MacBook-Pro.local'
   }
 })
 
