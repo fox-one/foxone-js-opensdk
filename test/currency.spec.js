@@ -1,4 +1,4 @@
-let sdk = new FoxSDK({env: 'development'})
+let sdk = new FoxSDK({ env: 'development' })
 let expect = chai.expect
 
 describe('Currency', function () {

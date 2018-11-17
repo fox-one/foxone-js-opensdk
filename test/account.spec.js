@@ -1,5 +1,26 @@
 let expect = chai.expect
-let sdk = new FoxSDK({env: 'development'})
+let sdk = new FoxSDK({ env: 'development' })
+let sdk_pro = new FoxSDK()
+
+describe('Prod Service', function () {
+  before(function () {
+    sdk_pro.api.config({
+      headers: {
+        'Authorization': 'Bearer'
+      }
+    })
+  })
+
+  it('getAccountDetail', function (done) {
+    sdk_pro.getAccountDetail().then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(err => {
+      done(err)
+    })
+  })
+
+})
 
 describe('Account Service', function () {
   before(function () {
@@ -44,14 +65,14 @@ describe('Account Service', function () {
     })
   })
 
-  it('verifyPIN', function (done) {
-    let pin = '123456'
-    sdk.verifyPIN(pin).then(function (res) {
-      expect(res).to.be.an('object')
-      done()
-    }).catch(function (err) {
-      done(err)
-    })
-  })
+  // it('verifyPIN', function (done) {
+  //   let pin = '123456'
+  //   sdk.verifyPIN(pin).then(function (res) {
+  //     expect(res).to.be.an('object')
+  //     done()
+  //   }).catch(function (err) {
+  //     done(err)
+  //   })
+  // })
 })
 

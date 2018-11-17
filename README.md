@@ -115,6 +115,8 @@ Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出�
 
 获取资产详情。注意eos资产和其他资产的区别： EOS标识使用的是账户名称（accountName）和账户标识（accountTag），其他资产的标识使用的是publicKey。
 
+changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以根据change，price字段结合汇率接口计算出当前不同币种的价格。
+
 **response**
 
 ```javascript
@@ -139,12 +141,12 @@ Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出�
                     "symbol": "EOS"
                 },
                 "chainId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
-                "change": -0.01022158, // 价格变化 
+                "change": -0.01022158, // 价格变化，btc计价
                 "changeBtc": -0.01513198, // 价格变化，btc计价
                 "changeUsd": 0.007236840585224058, // 价格变化，usd计价
                 "confirmations": 64, // 转账需要多少区块确认
                 "icon": "https://www.fox.one/assets/coins/eos.png", 
-                "price": 32.33471769, // 当前价格
+                "price": 32.33471769, // 当前价格 人民币计价
                 "priceBtc": 0.00082601, // 当前价格 btc计价
                 "priceUsd": 4.64989319 // 当前价格 usd计价
             }
@@ -353,6 +355,71 @@ FOX_REDPACKET_REFUND  // 红包退款
             "amount":"0", // 数量
             "assetId":"965e5c6e-434c-3fa9-b780-c50f43cd955c", // mixinAssetId
             "coinId":2437 
+        }
+    }
+}
+```
+
+
+
+#### currency()⇒ <code>Promise</code>
+
+获取汇率数据
+
+**response**
+
+```javascript
+{
+    "code": 0,
+    "data": {
+        "cnyTickers": [
+            {
+                "timestamp": 1542438000000,
+                "from": "IDR",
+                "to": "CNY",
+                "price": "0.000475",
+                "changeIn24h": "-0.0041928721174004"
+            },
+            {
+                "timestamp": 1542438000000,
+                "from": "MYR",
+                "to": "CNY",
+                "price": "1.656725",
+                "changeIn24h": "0.000504864758447"
+            },
+            {
+                "timestamp": 1542438001000,
+                "from": "JPY",
+                "to": "CNY",
+                "price": "0.061488",
+                "changeIn24h": "0.0032632815559326"
+            },
+            {
+                "timestamp": 1542438001000,
+                "from": "SGD",
+                "to": "CNY",
+                "price": "5.055761",
+                "changeIn24h": "0.0015082762051105"
+            },
+            {
+                "timestamp": 1542438001000,
+                "from": "USD",
+                "to": "CNY",
+                "price": "6.938041",
+                "changeIn24h": "-0.0002533214578693"
+            },
+            {
+                "timestamp": 1542439802000,
+                "from": "BTC",
+                "to": "CNY",
+                "price": "38949.11425768",
+                "changeIn24h": "-0.0130212018940632"
+            }
+        ],
+        "currencies": {
+            "bitcny": "1",
+            "usd": "6.938041",
+            "usdt": "6.945"
         }
     }
 }
