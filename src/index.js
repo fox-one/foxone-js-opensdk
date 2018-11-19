@@ -12,17 +12,38 @@ class FoxSdk {
   }
 
   modifyPIN (pin, newPin) {
+    if (typeof pin !== 'string' || typeof newPin !== 'string') {
+      return Promise.reject({code: -1, message: 'pin must be string'})
+    }
+    if (pin === '' || newPin === '') { 
+      return Promise.reject({code: -1, message: 'pin can not be empty'})
+    }
     const url = this.API.BASE + '/account/pin'
     let payload = {'pinType': 2}
-    let headers = {}
-    headers['fox-client-pin'] = rsa.$encrypt({
-      p: pin
-    })
+    let headers = {
+      'fox-client-pin': rsa.$encrypt({ p: pin })
+    }
     payload.newPinToken = rsa.$.encrypt(md5(MD5_SALT + newPin), true)
     return api.put(url, payload, { headers })
   }
 
-  verifyPIN (pin) {
+  setPIN (pin) {
+    if (typeof pin !== 'string') {
+      return Promise.reject({code: -1, message: 'pin must be string'})
+    }
+    if (pin === '') { 
+      return Promise.reject({code: -1, message: 'pin can not be empty'})
+    }
+    const url = this.API.BASE + '/account/pin'
+    let payload = {'pinType': 2}
+    payload.newPinToken = rsa.$.encrypt(md5(MD5_SALT + pin), true)
+    return api.put(url, payload)
+  }
+
+  verifyPIN(pin) {
+    if (typeof pin !== 'string') {
+      return Promise.reject({code: -1, message: 'pin must be string'})
+    }
     const url = this.API.BASE + '/account/pin-verify'
     let payload = { pinType: 2 }
     // pin 相同时则为验证逻辑
@@ -61,8 +82,7 @@ class FoxSdk {
     return api.get(url)
   }
 
-
-  withdraw (data, pin) {
+  withdraw(data, pin) {
     const url = `${this.API.BASE}/wallet/withdraw`
     return api.post(url, data, {
       headers: getPinHeaders(pin)

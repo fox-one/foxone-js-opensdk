@@ -92,9 +92,29 @@ Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出�
 
 
 
-#### **modifyPIN(pin, newPin) ⇒ <code>Promise</code>**
+#### setPIN(pin) ⇒ <code>Promise</code>
 
-修改或者设置pin，第一次设置pin的时候将旧的pin传空字符串。
+设置pin
+
+**request**
+
+| 字段 | type   | require | 描述 |
+| ---- | ------ | ------- | ---- |
+| Pin  | String | true    |      |
+
+**response**
+
+```javascript
+{"code":0,"data":{}}
+```
+
+
+
+
+
+#### modifyPIN(pin, newPin) ⇒ <code>Promise</code>
+
+修改pin
 
 **request**
 
@@ -429,6 +449,8 @@ FOX_REDPACKET_REFUND  // 红包退款
 
 ### 错误码
 
+服务端错误码
+
 | code | 描述                                        |
 | ---- | ------------------------------------------- |
 | 1    | invalid operation                           |
@@ -446,4 +468,10 @@ FOX_REDPACKET_REFUND  // 红包退款
 | 1600 | wallet not initialized |
 | 1601 | invalid public key |
 | 2048 | invalid application |
+
+客户端错误码
+
+| code | 描述           |
+| ---- | -------------- |
+| -1   | 参数校验不通过 |
 

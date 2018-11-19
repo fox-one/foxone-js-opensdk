@@ -1,17 +1,55 @@
-let sdk = new FoxSDK({env: 'development'})
-let api = sdk.api
+let sdk = new FoxSDK({ env: 'development' })
 let expect = chai.expect
 
-describe('Wallet Service', function () {
+describe('test sdk', function () {
   before(function () {
-    api.config({
+    sdk.api.config({
       headers: {
         'Authorization': 'Bearer dSw1MXMsZCxDRSxlLDFnWW1MVQ==.+kFvORmpMdUb5Cl9iCeZNbRjqvoJcyzDjMyq1/ENL0k='
       }
     })
   })
 
-  it('#loadAssets', function (done) {
+it('#modifyPIN', function (done) {
+  let pin = {}
+    let newPin = "950626"
+    sdk.modifyPIN(pin, newPin).then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(function (res) {
+      done(res)
+    })
+  })
+
+it('verifyPIN', function (done) {
+    let pin = '123456'
+    sdk.verifyPIN(pin).then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(function (err) {
+      done(err)
+    })
+  })
+
+  it('normal response for getAccountDetail()', function (done) {
+    sdk.getAccountDetail().then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(err => {
+      done(err)
+    })
+  })
+
+  it('normal response for currency()', function (done) {
+    sdk.currency().then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(function (err) {
+      done(err)
+    })
+  })
+
+  it('normal response for loadAsserts()', function (done) {
     sdk.loadAssets().then(function (res) {
       expect(res).to.be.an('object')
       done()
@@ -20,7 +58,7 @@ describe('Wallet Service', function () {
     })
   })
 
-  it('#loadAsset', function (done) {
+  it('normal response for loadAsset()', function (done) {
     let assetId = '6cfe566e-4aad-470b-8c9a-2fd35b49c68d'
     sdk.loadAsset(assetId).then(function (res) {
       expect(res).to.be.an('object')
@@ -30,7 +68,7 @@ describe('Wallet Service', function () {
     })
   })
 
-  it('#loadEnabledCoins', function (done) {
+  it('normal response for loadEnabledCoins()', function (done) {
     sdk.loadEnabledCoins().then(function (res) {
       expect(res).to.be.an('object')
       done()
@@ -38,8 +76,6 @@ describe('Wallet Service', function () {
       done(err)
     })
   })
-
-  it('#withdraw; for EOS')
 
   // it('#withdraw; for EOS', function (done) {
   //   let params = {
@@ -58,7 +94,7 @@ describe('Wallet Service', function () {
   //   })
   // })
 
-  it('#withdraw; for CNB')
+  it('withdraw(); for EOS')
 
   // it('#withdraw; for CNB', function (done) {
   //   let params = {
@@ -76,7 +112,9 @@ describe('Wallet Service', function () {
   //   })
   // })
 
-  it('#loadSnapshots', function (done) {
+  it('withdraw(); for CNB')
+
+  it('normal response for loadSnapshots()', function (done) {
     let assetId = '6cfe566e-4aad-470b-8c9a-2fd35b49c68d'
     sdk.loadSnapshots(assetId).then(function (res) {
       expect(res).to.be.an('object')
@@ -99,4 +137,5 @@ describe('Wallet Service', function () {
       done(err)
     })
   })
+
 })
