@@ -35,14 +35,31 @@ sdk.getAccountDetail().then(res => {
 }).catch(err => {
     // error
 })
-
 ```
+
+
+
+### 返回的格式以及错误处理
+
+Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返回的状态，如果请求成功，resolve()中返回的是data。如果请求失败，reject()中会返回code(错误码)和message(错误消息)，可以在catch()方法中捕捉错误码和错误消息，进行相应的错误处理。
+
+```javascript
+// 网络请求返回的数据结构
+{
+    code: 0, // code === 0 表示操作成功，其他的值表示请求失败
+    data: {
+       // data   
+    }    
+}
+```
+
+
 
 
 
 ### API 接口
 
-Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出了请求成功时resolve()中的参数的字段，并且删除了一些API中有返回但是用不到的字段。
+下面的response是网络请求成功返回的response，并删除了一些有返回但是不会用上的字段。
 
 
 
