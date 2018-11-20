@@ -137,6 +137,8 @@ Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出�
 
 changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以根据change，price字段结合汇率接口计算出当前不同币种的价格。
 
+
+
 **response**
 
 ```javascript
@@ -260,8 +262,8 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
 | -------------- | ------ | ------- | ------------------------------------------------------------ |
 | data           | Object | true    | 包含提币所需信息的对象                                       |
 | data.assetId   | String | true    | 资产id                                                       |
-| data.publicKey | String | true    | 币种是eos时应该传eos的accountTag，其他币种传资产对应的pulicKey |
-| data.label     | String | false   | 币种是eos时传eos的accountName，其他币种可以                  |
+| data.publicKey | String | true    | 币种是eos时应该传eos的accountName，其他币种传资产对应的pulicKey |
+| data.label     | String | false   | 币种是eos时传eos的accountTag，其他币种可以不传               |
 | data.amount    | String | true    | 提币的数量                                                   |
 | data.memo      | String | true    | 备注                                                         |
 | pin            | String | true    | pin                                                          |
@@ -291,9 +293,20 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
 
 
 
-#### loadSnapshots() ⇒ <code>Promise</code>
+#### loadSnapshots(params) ⇒ <code>Promise</code>
 
 转账、交易等操作详细信息的列表
+
+**request**
+
+| 字段           | type   | require | 描述                                       |
+| -------------- | ------ | ------- | ------------------------------------------ |
+| params         | Object | true    | 请求的参数                                 |
+| params.assetId | string | True    | Mixing assetId,需要获取的币种id            |
+| params.cursor  | String | False   | 分页请求中下一页的指针                     |
+| params.limit   | Number | False   | 每页返回的数量，默认20条，最小10，最大50。 |
+
+
 
 **response**
 

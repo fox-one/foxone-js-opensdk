@@ -15,7 +15,7 @@ class FoxSdk {
     if (typeof pin !== 'string' || typeof newPin !== 'string') {
       return Promise.reject({code: -1, message: 'pin must be string'})
     }
-    if (pin === '' || newPin === '') { 
+    if (pin === '' || newPin === '') {
       return Promise.reject({code: -1, message: 'pin can not be empty'})
     }
     const url = this.API.BASE + '/account/pin'
@@ -31,7 +31,7 @@ class FoxSdk {
     if (typeof pin !== 'string') {
       return Promise.reject({code: -1, message: 'pin must be string'})
     }
-    if (pin === '') { 
+    if (pin === '') {
       return Promise.reject({code: -1, message: 'pin can not be empty'})
     }
     const url = this.API.BASE + '/account/pin'
@@ -89,9 +89,9 @@ class FoxSdk {
     })
   }
 
-  loadSnapshots (id) {
-    const url = `${this.API.BASE}/wallet/snapshots?assetId=${id}`
-    return api.get(url)
+  loadSnapshots ({params}) {
+    const url = `${this.API.BASE}/wallet/snapshots`
+    return api.get(url, {params})
   }
 
   loadFee (data, pin) {
