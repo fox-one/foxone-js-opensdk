@@ -89,7 +89,7 @@ class FoxSdk {
     })
   }
 
-  loadSnapshots ({params}) {
+  loadSnapshots (params) {
     const url = `${this.API.BASE}/wallet/snapshots`
     return api.get(url, {params})
   }
