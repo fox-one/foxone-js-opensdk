@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "server": "http-server . -c-1",
-    "build": "webpack --progress --colors --config ./webpack.config.js"
+    "build": "webpack --progress --colors --config ./webpack.config.js",
+    "docsify": "docsify init ./docs && docsify serve ./docs"
   },
   "repository": {
     "type": "git",
