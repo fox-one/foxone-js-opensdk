@@ -12,14 +12,14 @@ describe('test sdk', function () {
     })
   })
 
-  it('setPIN', function (done) {
-    sdk.setPIN('123456').then(function (res) {
-      expect(res).to.be.an('object')
-      done()
-    }).catch(function (res) {
-      done(res)
-    })
-  })
+  // it('setPIN', function (done) {
+  //   sdk.setPIN('123456').then(function (res) {
+  //     expect(res).to.be.an('object')
+  //     done()
+  //   }).catch(function (res) {
+  //     done(res)
+  //   })
+  // })
 
   // it('#modifyPIN', function (done) {
   //     let pin = '123456'
@@ -32,15 +32,15 @@ describe('test sdk', function () {
   //     })
   //   })
 
-  it('verifyPIN', function (done) {
-      let pin = '123456'
-      sdk.verifyPIN(pin).then(function (res) {
-        expect(res).to.be.an('object')
-        done()
-      }).catch(function (err) {
-        done(err)
-      })
-  })
+  // it('verifyPIN', function (done) {
+  //     let pin = '123456'
+  //     sdk.verifyPIN(pin).then(function (res) {
+  //       expect(res).to.be.an('object')
+  //       done()
+  //     }).catch(function (err) {
+  //       done(err)
+  //     })
+  // })
   
   it('normal response for getAccountDetail()', function (done) {
     sdk.getAccountDetail().then(function (res) {
@@ -88,6 +88,15 @@ describe('test sdk', function () {
     })
   })
 
+  it('normal response for loadUserAsset()', function (done) {
+    sdk.loadUserAssets().then(function (res) {
+      expect(res).to.be.an('object')
+      done()
+    }).catch(function (err) {
+      done(err)
+    })
+  })
+
   // it('#withdraw; for EOS', function (done) {
   //   let params = {
   //     label: '',
@@ -107,21 +116,21 @@ describe('test sdk', function () {
 
   it('withdraw(); for EOS')
 
-  it('#withdraw; for CNB', function (done) {
-    let params = {
-      assetId: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
-      publicKey: '0x7588B06E7D623a5Ef6896ff199C08026A60d1f9b',
-      amount: '10',
-      memo: 'test'
-    }
-    let pin = '123456'
-    sdk.withdraw(params, pin).then(function (res) {
-      expect(res).to.be.an('object')
-      done()
-    }).catch(function (res) {
-      done(res)
-    })
-  })
+  // it('#withdraw; for CNB', function (done) {
+  //   let params = {
+  //     assetId: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
+  //     publicKey: '0x7588B06E7D623a5Ef6896ff199C08026A60d1f9b',
+  //     amount: '10',
+  //     memo: 'test'
+  //   }
+  //   let pin = '123456'
+  //   sdk.withdraw(params, pin).then(function (res) {
+  //     expect(res).to.be.an('object')
+  //     done()
+  //   }).catch(function (res) {
+  //     done(res)
+  //   })
+  // })
   
   it('normal response for loadSnapshots()', function (done) {
     let assetId = '6cfe566e-4aad-470b-8c9a-2fd35b49c68d'

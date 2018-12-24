@@ -9,11 +9,8 @@
     "test"
   ],
   "scripts": {
-    "debug": "webpack-dev-server --inline --progress --config webpack.config.js",
-    "test": "mocha --compilers js:babel-core/register",
     "server": "http-server . -c-1",
-    "build": "webpack --progress --colors --config ./webpack.config.js",
-    "doc": "jsdoc src/index.js -r -c jsdoc.conf.json -d jsdoc_docs"
+    "build": "webpack --progress --colors --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",

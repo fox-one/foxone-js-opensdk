@@ -150,7 +150,9 @@ Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返
 
 #### loadAssets()  ⇒ <code>Promise</code>
 
-获取资产详情。注意eos资产和其他资产的区别： EOS标识使用的是账户名称（accountName）和账户标识（accountTag），其他资产的标识使用的是publicKey。
+获取FoxONE支持的资产详情列表。
+
+注意eos资产和其他资产的区别： EOS标识使用的是账户名称（accountName）和账户标识（accountTag），其他资产的标识使用的是publicKey。
 
 changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以根据change，price字段结合汇率接口计算出当前不同币种的价格。
 
@@ -266,6 +268,33 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
     }
 }
 ```
+
+
+
+#### loadUserAssets() ⇒ <code>Promise</code>
+
+用户的资产列表
+
+**Response**
+
+```javascript
+{
+    "code": 0,
+    "data": {
+        "coins": [
+            {
+                "coinId": 1,
+                "logo": "https://www.fox.one/assets/coins/btc.png",
+                "mixinAssetId": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+                "name": "Bitcoin",
+                "symbol": "BTC"
+            },
+        ]
+    }
+}
+```
+
+
 
 
 

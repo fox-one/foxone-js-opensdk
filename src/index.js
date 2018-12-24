@@ -84,8 +84,9 @@ class FoxSdk {
     return api.get(url)
   }
 
+  // 所有foxone支持的资产
   loadAssets () {
-    const url = `${this.API.BASE}/wallet/assets`
+    const url = `${this.API.BASE}/wallet/assets?entirechain=1`
     return api.get(url)
   }
 
@@ -94,8 +95,15 @@ class FoxSdk {
     return api.get(url)
   }
 
+  // 表示用户资产 / 支持提币的资产列表
   loadEnabledCoins () {
-    const url = `${this.API.BASE}/market/coin/wallet-assets`
+    const url = `${this.API.BASE}/wallet/assets`
+    return api.get(url)
+  }
+
+  // 表示用户资产 / 支持提币的资产列表
+  loadUserAssets () {
+    const url = `${this.API.BASE}/wallet/assets`
     return api.get(url)
   }
 

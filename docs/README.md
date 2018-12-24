@@ -35,14 +35,31 @@ sdk.getAccountDetail().then(res => {
 }).catch(err => {
     // error
 })
-
 ```
+
+
+
+### 返回的格式以及错误处理
+
+Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返回的状态，如果请求成功，resolve()中返回的是data。如果请求失败，reject()中会返回code(错误码)和message(错误消息)，可以在catch()方法中捕捉错误码和错误消息，进行相应的错误处理。
+
+```javascript
+// 网络请求返回的数据结构
+{
+    code: 0, // code === 0 表示操作成功，其他的值表示请求失败
+    data: {
+       // data   
+    }    
+}
+```
+
+
 
 
 
 ### API 接口
 
-Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出了请求成功时resolve()中的参数的字段，并且删除了一些API中有返回但是用不到的字段。
+下面的response是网络请求成功返回的response，并删除了一些有返回但是不会用上的字段。
 
 
 
@@ -133,7 +150,9 @@ Fox.ONE Open SDK中的接口返回类型是Promise。下面response中的列出�
 
 #### loadAssets()  ⇒ <code>Promise</code>
 
-获取资产详情。注意eos资产和其他资产的区别： EOS标识使用的是账户名称（accountName）和账户标识（accountTag），其他资产的标识使用的是publicKey。
+获取FoxONE支持的资产详情列表。
+
+注意eos资产和其他资产的区别： EOS标识使用的是账户名称（accountName）和账户标识（accountTag），其他资产的标识使用的是publicKey。
 
 changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以根据change，price字段结合汇率接口计算出当前不同币种的价格。
 
@@ -249,6 +268,33 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
     }
 }
 ```
+
+
+
+#### loadUserAssets() ⇒ <code>Promise</code>
+
+用户的资产列表
+
+**Response**
+
+```javascript
+{
+    "code": 0,
+    "data": {
+        "coins": [
+            {
+                "coinId": 1,
+                "logo": "https://www.fox.one/assets/coins/btc.png",
+                "mixinAssetId": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+                "name": "Bitcoin",
+                "symbol": "BTC"
+            },
+        ]
+    }
+}
+```
+
+
 
 
 
