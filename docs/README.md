@@ -256,14 +256,33 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
 {
     "code": 0,
     "data": {
-        "coins": [
+        "assets": [
             {
-                "coinId": 1,
-                "logo": "https://www.fox.one/assets/coins/btc.png",
-                "mixinAssetId": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
-                "name": "Bitcoin",
-                "symbol": "BTC"
-            },
+                "name": "EOS",
+                "symbol": "EOS", // 简称
+                "publicKey": "", // 资产标识
+                "accountName": "eoswithmixin", // eos账户名称
+                "accountTag": "2f06d6944a63343661b1db4dcb21c129",  // eos账户标识
+                "assetId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d", // mixinAssetId
+                "assetKey": "", 
+                "balance": 0.005, // 余额
+                "chain": { // 主链信息
+                    "coinId": 5,
+                    "logo": "https://www.fox.one/assets/coins/eos.png",
+                    "mixinAssetId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
+                    "name": "EOS",
+                    "symbol": "EOS"
+                },
+                "chainId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
+                "change": -0.01022158, // 价格变化，btc计价
+                "changeBtc": -0.01513198, // 价格变化，btc计价
+                "changeUsd": 0.007236840585224058, // 价格变化，usd计价
+                "confirmations": 64, // 转账需要多少区块确认
+                "icon": "https://www.fox.one/assets/coins/eos.png", 
+                "price": 32.33471769, // 当前价格 人民币计价
+                "priceBtc": 0.00082601, // 当前价格 btc计价
+                "priceUsd": 4.64989319 // 当前价格 usd计价
+            }
         ]
     }
 }
@@ -281,14 +300,33 @@ changeBtc、changeUsd、priceBtc、priceUsd是从mixin返回的数据。可以�
 {
     "code": 0,
     "data": {
-        "coins": [
+        "assets": [
             {
-                "coinId": 1,
-                "logo": "https://www.fox.one/assets/coins/btc.png",
-                "mixinAssetId": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
-                "name": "Bitcoin",
-                "symbol": "BTC"
-            },
+                "name": "EOS",
+                "symbol": "EOS", // 简称
+                "publicKey": "", // 资产标识
+                "accountName": "eoswithmixin", // eos账户名称
+                "accountTag": "2f06d6944a63343661b1db4dcb21c129",  // eos账户标识
+                "assetId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d", // mixinAssetId
+                "assetKey": "", 
+                "balance": 0.005, // 余额
+                "chain": { // 主链信息
+                    "coinId": 5,
+                    "logo": "https://www.fox.one/assets/coins/eos.png",
+                    "mixinAssetId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
+                    "name": "EOS",
+                    "symbol": "EOS"
+                },
+                "chainId": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
+                "change": -0.01022158, // 价格变化，btc计价
+                "changeBtc": -0.01513198, // 价格变化，btc计价
+                "changeUsd": 0.007236840585224058, // 价格变化，usd计价
+                "confirmations": 64, // 转账需要多少区块确认
+                "icon": "https://www.fox.one/assets/coins/eos.png", 
+                "price": 32.33471769, // 当前价格 人民币计价
+                "priceBtc": 0.00082601, // 当前价格 btc计价
+                "priceUsd": 4.64989319 // 当前价格 usd计价
+            }
         ]
     }
 }
