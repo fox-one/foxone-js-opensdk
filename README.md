@@ -55,6 +55,10 @@ Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返
 
 
 
+### 关于私钥（pin）
+
+FoxONE 不保存用户的私钥，一旦丢失无法通过后台找回，请务必提醒用户牢记密码。
+
 
 
 ### API 接口
@@ -115,9 +119,9 @@ Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返
 
 **request**
 
-| 字段 | type   | require | 描述 |
-| ---- | ------ | ------- | ---- |
-| Pin  | String | true    |      |
+| 字段 | type   | require | 描述                |
+| ---- | ------ | ------- | ------------------- |
+| Pin  | String | true    | 6位数字组成的字符串 |
 
 **response**
 
@@ -135,10 +139,10 @@ Fox.ONE Open SDK中的接口返回类型是Promise，sdk会判断网络请求返
 
 **request**
 
-| 字段   | type   | require | 描述      |
-| ------ | ------ | ------- | --------- |
-| pin    | String | true    | 旧的pin码 |
-| newPin | String | true    | 新的pin码 |
+| 字段   | type   | require | 描述                           |
+| ------ | ------ | ------- | ------------------------------ |
+| pin    | String | true    | 旧的pin码                      |
+| newPin | String | true    | 新的pin码，6位数字组成的字符串 |
 
 **response**
 
@@ -572,3 +576,12 @@ FOX_REDPACKET_REFUND  // 红包退款
 | ---- | -------------- |
 | -1   | 参数校验不通过 |
 
+
+
+### 更新日志
+
+#### 2019.1.14 
+
+* 限制pin的格式为6位数字组成的字符串，设置pin和修改pin的时候添加校验
+
+* 更新文档说明

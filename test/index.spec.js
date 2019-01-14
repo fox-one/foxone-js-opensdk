@@ -1,13 +1,13 @@
-// let sdk = new FoxSDK({ env: 'development' })
-let sdk = new FoxSDK()
+let sdk = new FoxSDK({ env: 'development' })
+// let sdk = new FoxSDK()
 let expect = chai.expect
 
 describe('test sdk', function () {
   before(function () {
     sdk.api.config({
       headers: {
-        // 'Authorization': "Bearer dSw1MXMsZCxDRSxlLDFnYWNMeA==.crmbiQn8SHlZY5woNGAgqUPvdpbofOkdS2eV1DHjXbI=" //开发
-        'Authorization': "Bearer dSx5WTYsZCw0M2EsZSwxZ2RiR28=.S55PkY/QvitLxWMBCuEIuD+jHR3I+5k2nepwJFlfeI4=" //生产
+        'Authorization': "Bearer dSw1MXMsZCxDUSxlLDFndHQ1dw==.qBj2jPLqDFxK+5oMFEzGdyu3HYPbsxi8tj0TTFcRfqM=" //开发
+        // 'Authorization': "Bearer dSx5WTYsZCw0M2EsZSwxZ2RiR28=.S55PkY/QvitLxWMBCuEIuD+jHR3I+5k2nepwJFlfeI4=" //生产
       }
     })
   })
@@ -41,6 +41,46 @@ describe('test sdk', function () {
   //       done(err)
   //     })
   // })
+
+  it('modifyPIN() non number pin should be invalid', function (done) {
+      let pin = '12345e6'
+      let newPin = "1d1111"
+      sdk.modifyPIN(pin, newPin).then(function (res) {
+        expect(res.code).to.equal(-1)
+        done() 
+      }).catch(function (res) {
+        done(res)
+      })
+    })
+
+    it('setPIN() non number pin should be invalid', function (done) {
+      sdk.setPIN('1234a6').then(function (res) {
+        expect(res.code).to.equal(-1)
+        done()
+      }).catch(function (res) {
+        done(res)
+      })
+    })
+
+    it('modifyPIN() non 6 byte pin should be invalid', function (done) {
+      let pin = '12345e6'
+      let newPin = "1d1111"
+      sdk.modifyPIN(pin, newPin).then(function (res) {
+        expect(res.code).to.equal(-1)
+        done()
+      }).catch(function (res) {
+        done(res)
+      })
+    })  
+
+    it('setPIN() non 6 byte pin should be invalid', function (done) {
+      sdk.setPIN('1234556').then(function (res) {
+        expect(res.code).to.equal(-1)
+        done()
+      }).catch(function (res) {
+        done(res)
+      })
+    })  
   
   it('normal response for getAccountDetail()', function (done) {
     sdk.getAccountDetail().then(function (res) {

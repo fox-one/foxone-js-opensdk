@@ -4,6 +4,8 @@ import md5 from 'blueimp-md5'
 import { JSEncrypt } from 'jsencrypt'
 const uuidV4 = require('uuid/v4')
 
+const REG_PASSWORD = /^\d{6}$/
+
 class FoxSdk {
   constructor ({env = 'production'} = {}) {
     this.api = api
@@ -35,6 +37,9 @@ class FoxSdk {
     if (pin === '' || newPin === '') {
       return Promise.reject({code: -1, message: 'pin can not be empty'})
     }
+    if (!REG_PASSWORD.test(newPin)) {
+      return Promise.reject({code: -1, message: 'pin is not valid'})
+    }
     const url = this.API.BASE + '/account/pin'
     let payload = {'pinType': 2}
     let headers = {
@@ -50,6 +55,9 @@ class FoxSdk {
     }
     if (pin === '') {
       return Promise.reject({code: -1, message: 'pin can not be empty'})
+    }
+    if (!REG_PASSWORD.test(pin)) {
+      return Promise.reject({code: -1, message: 'pin is not valid'})
     }
     const url = this.API.BASE + '/account/pin'
     let payload = {'pinType': 2}
